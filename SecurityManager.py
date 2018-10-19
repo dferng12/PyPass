@@ -30,3 +30,13 @@ class SecurityManager:
         alphabet = string.ascii_letters + string.digits
         password = ''.join(secrets.choice(alphabet) for _ in range(length))
         return self.cipher_field(password)
+
+    def get_hashed_passwd(self):
+        hash = SHA256.new(self.__shaKey)
+        return hash.hexdigest()
+
+    @staticmethod
+    def get_hash(field):
+        hash = SHA256.new(field.encode('utf-8'))
+        return hash.hexdigest()
+

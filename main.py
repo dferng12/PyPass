@@ -1,18 +1,33 @@
 from PyPass import *
 
 if __name__ == '__main__':
-    user = input('Enter user: ')
+    option = input('Wanna create new account(1) or login(2) ?')
+    pyPass = PyPass()
+
+    if option == '1':
+        username = input('Enter username: ')
+        masterPass = input('Enter master password: ')
+        if not pyPass.create_account(username, masterPass):
+            print('Username already exists')
+            exit(0)
+        else:
+            print('Username created successfuly')
+
+    elif option != '1' and option != '2':
+        print('Not valid option')
+        exit(0)
+
+    username = input('Enter username: ')
     masterPass = input('Enter master password: ')
 
-    pyPass = PyPass(user, masterPass)
-
-    if pyPass.check_master_password():
+    if pyPass.auth_user(username,masterPass):
         while True:
             print('--------------')
             print('Options: ')
             print('1: Enter new username/password')
-            print('2: Show existing usernames/passwords')
+            print('2: Show existing username/password')
             print('3: Generate password for username')
+            print('4: Exit')
 
             choice = input("Enter the number: ")
 
@@ -34,8 +49,10 @@ if __name__ == '__main__':
                 username = input('Enter username: ')
                 pyPass.generate_new_entry(id, username)
 
+            elif choice == '4':
+                exit(0)
             else:
                 print('Not valid number')
 
     else:
-        print('Password wrong. Exiting.')
+        print('Username or password wrong. Exiting.')
